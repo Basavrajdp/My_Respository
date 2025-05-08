@@ -7,11 +7,8 @@ typedef struct dll
 	int acc_no;
 	int pin;
 	double bal;
-	char date[1024];
 	int w;
-	char w_t[1024];
 	int d;
-	char d_t[1024];
 	struct dll *next;
 }dll;
 dll *head=0;
