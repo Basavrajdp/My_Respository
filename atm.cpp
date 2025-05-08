@@ -1,5 +1,5 @@
-#include "header.h"
-class DSA
+#include "header.h" // header inclusion for structure member
+class DSA // creating the linked list reading data from file
 {
 	public:
 		int i,j,k;
@@ -12,7 +12,7 @@ class DSA
 		DSA()
 		{
 			ifstream fin;
-			fin.open("data");
+			fin.open("data"); //read the data from the file for atm functional operation
 			if(fin.fail())
 			{
 				cout<<"no data file is present"<<endl;
@@ -25,17 +25,17 @@ class DSA
 				cc++;
 			}
 			fin.clear();
-			fin.seekg(0);
-			p=new char*[cc];
+			fin.seekg(0);           //rewinding of file pointer to intial location
+			p=new char*[cc];       //allocating 2d array to storing data
 			for(i=0;i<lc;i++)
 			{
 				p[i]=new char[cc];
 				while((fin.getline(p[i],cc)))
 				{
-					s.push_back(p[i]);
+					s.push_back(p[i]);       //storing into string array of all file
 				}
 			}
-			my_split(s);
+			my_split(s);          // to saparating for required like user_name , account number , pin and balance .
 			print();
 		}
 		void my_split(vector<string> &s)
@@ -58,36 +58,36 @@ class DSA
 					}
 					else if(flag==0)
 					{
-						name[k]=s[i][j];
+						name[k]=s[i][j];                     //for user name
 						k++;
 					}
 					else if(flag==1)
 					{
 						name[k]='\0';
-						acc_no=acc_no*10+(s[i][j]-48);
+						acc_no=acc_no*10+(s[i][j]-48);        //for account number
 					}
 					else if(flag==2)
 					{
-						pin=pin*10+(s[i][j]-48);
+						pin=pin*10+(s[i][j]-48);         // for pin
 					}
 					else if(flag==3)
 					{
-						bal=bal*10+(s[i][j]-48);
+						bal=bal*10+(s[i][j]-48);       // for balance
 					}
 				}
-				data(name,acc_no,pin,bal);
+				data(name,acc_no,pin,bal);   //sending user_name ,account_number, pin and balance data for creating double linked list
 			}
 		}
 		void data(char *name,int acc_no,int pin,double bal)
 		{
-			n=new dll;
+			n=new dll; // new node
 			n->name=name;
 			n->acc_no=acc_no;
 			n->pin=pin;
 			n->bal=bal;
 			n->w=0;
 			n->d=0;
-			add_last();
+			add_last();          // creating liked list
 		}
 		void add_last()
 		{
@@ -107,7 +107,7 @@ class DSA
 				ptr->next=n;
 			}
 		}
-		void print()
+		void print()                     // printing linked list data
 		{
 			dll *ptr=head;
 			cout<<"printing node data"<<endl;
@@ -125,35 +125,35 @@ class ATM:public DSA
 		int num,nc;
 		ATM()
 		{
-l1:		dll *ptr=head;
-		dll *ptr1=head;
+l1:		dll *ptr=head;           // pointing first head node for
+		dll *ptr1=head;         // pointing first head node for
 		string name;int pin;
 		int acc_no,op,flag=0,flag1=0;
-		while(1)
+		while(1)            
 		{
-			cout<<"1) by user_name"<<endl;
+			cout<<"1) by user_name"<<endl; 
 			cout<<"2) by account number"<<endl;
 			cout<<"-----------------------------"<<endl;
 			cout<<"enter the option"<<endl;
-			cin>>op;
-			if(op==1)
+			cin>>op;   // menue option for do operation either user_name nor  account number instead of card insert
+			if(op==1) // for username based operation
 			{
 				cout<<"enter user_name"<<endl;
-				cin>>name;
+				cin>>name;        // for username 
 				while(ptr)
 				{
-					if((ptr->name)==name)
+					if((ptr->name)==name)  // if user_name found move further 
 					{
 						cout<<(ptr->name)<<endl;
-						cout<<"1) generate new atm pin"<<endl;
-						cout<<"2) atm pin is available"<<endl;
+						cout<<"1) generate new atm pin"<<endl; 
+						cout<<"2) atm pin is available"<<endl; 
 						cout<<"---------------------------"<<endl;
-						cout<<"enter the option"<<endl;
+						cout<<"enter the option"<<endl; //asking user wheather the pin want to generate or its already available
 						cin>>op;
-						if(op==1)
+						if(op==1)                      // if user want to generate pin move further
 						{
 							cout<<"enter new pin"<<endl;
-							cin>>pin;
+							cin>>pin;   // setting new pin
 							ptr->pin=pin;
 							cout<<"atm pin is setting wait for minute ...."<<endl;
 							sleep(2);
@@ -163,69 +163,69 @@ l1:		dll *ptr=head;
 						else
 						{
 							cout<<"enter ATM PIN"<<endl;
-							cin>>pin;
+							cin>>pin;             //if pin is available
 							for(num=pin,nc=0;num;num=num/10)
-								nc++;
-							if(nc!=4)
-							{
+								nc++;               //counting the pin digits is whether is four or exceeds 
+							if(nc!=4)                  //if pin exceeds greater than 4 print error message
+							{ 
 								cout<<"please enter must  4 digit  pin"<<endl;
 								goto l1;
 							}
 							while(ptr1)
 							{
-								if((ptr1->pin)==pin)
+								if((ptr1->pin)==pin)  // if pin is found with respect to user_name 
 								{
 									cout<<"1) withdraw amount"<<endl;
 									cout<<"2) deposit_amount"<<endl;
 									cout<<"3) balance enquiry"<<endl;
 									cout<<"4) transaction details"<<endl;
 									cout<<"--------------------------------------------"<<endl;
-									cin>>op;
+									cin>>op;         //asking operation for withdraw, deposit, balance enquiry or transaction information 
 									switch(op)
 									{
-										case 1:withdraw(pin);break;
-										case 2:deposit(pin);break;
-										case 3:balance(pin);break;
-										case 4:transaction_info(pin);break;
+										case 1:withdraw(pin);break;    // for widrawing amount respect to user_name
+										case 2:deposit(pin);break;    // for depositing amount respect to user_name
+										case 3:balance(pin);break;    //for balance enquiry respect to user_name
+										case 4:transaction_info(pin);break; //for transaction details respect to user_name
 									}
 									flag=1;
 								}
-								ptr1=ptr1->next;
+								ptr1=ptr1->next; // traversing ponter ptr1 in forward upto null or moving linked list upto null pointer
 							}
-							if(flag==0)
+							if(flag==0)  //checking flag wheather the pin is available or not 
 							{
-								cout<<"atm pin is wrong"<<endl;
-								goto l1;
+								cout<<"atm pin is wrong"<<endl; //if pin is not found displaying error message
+								goto l1; // again moving in backward to intial process
 							}
 						}
-						flag1=1;
+						flag1=1; 
 					}
-					if(flag1==0)
+					if(flag1==0) //checking username is found or not
 					{
-						cout<<"wrong user name entered"<<endl;
-						goto l1;
+						cout<<"wrong user name entered"<<endl; //if username found displaying error message 
+						goto l1; //again moving in backward  to intial process
 					}
-					ptr=ptr->next;
+					ptr=ptr->next; //traversing ponter ptr in forward upto null or moving linked list upto null pointer
 				}
 				goto l1;
 			}
-			else if(op==2)
+			else if(op==2) // for account_number basec operation
 			{
 				cout<<"enter account_number"<<endl;
-				cin>>acc_no;
+				cin>>acc_no; //account number
 				while(ptr)
 				{
-					if((ptr->acc_no)==acc_no)
+					if((ptr->acc_no)==acc_no) // if account_number found move further 
 					{
 						cout<<"1) generate new atm pin"<<endl;
 						cout<<"2) atm pin is available"<<endl;
 							cout<<"---------------------------"<<endl;
 							cout<<"enter the option"<<endl;
-							cin>>op;
-							if(op==1)
+							cin>>op;                              //asking user wheather the pin want to generate or its already available
+							if(op==1)                  // if user want to generate pin move further
 							{
 								cout<<"enter new pin"<<endl;
-								cin>>pin;
+								cin>>pin; // setting new pin
 								ptr->pin=pin;
 								cout<<"atm pin is setting wait for minute ...."<<endl;
 								sleep(2);
@@ -236,70 +236,70 @@ l1:		dll *ptr=head;
 								cout<<"enter ATM PIN"<<endl;
 								cin>>pin;
 								for(num=pin,nc=0;num;num=num/10)
-									nc++;
-								if(nc!=4)
+									nc++; //counting the pin digits is whether is four or exceeds 
+								if(nc!=4)             //if pin exceeds greater than 4 print error message
 								{
 									cout<<"please enter must  4 digit  pin"<<endl;
 									goto l1;
 								}
 								while(ptr1)
 								{
-									if((ptr1->pin)==pin)
+									if((ptr1->pin)==pin) // if pin is found with respect to account_number 
 									{
 										cout<<"1) withdraw amount"<<endl;
 										cout<<"2) deposit_amount"<<endl;
 										cout<<"3) balance enquiry"<<endl;
 										cout<<"4) transaction details"<<endl;
 										cout<<"--------------------------------------------"<<endl;
-										cin>>op;
+										cin>>op;         //asking operation for withdraw, deposit, balance enquiry or transaction information 
 										switch(op)
 										{
-											case 1:withdraw(pin);break;
-											case 2:deposit(pin);break;
-											case 3:balance(pin);break;
-											case 4:transaction_info(pin);break;
+											case 1:withdraw(pin);break;  // for widrawing amount respect to account_number
+											case 2:deposit(pin);break;   // for depositing amount respect to account_number
+											case 3:balance(pin);break;  // for balance enquiry respect to account_number
+											case 4:transaction_info(pin);break;   // for transaction details respect to account_number
 										}
 										flag=1;
 									}
-									ptr1=ptr1->next;
+									ptr1=ptr1->next;    // traversing ponter ptr1 in forward upto null or moving linked list upto null pointer
 								}
-								if(flag==0)
+								if(flag==0)        //checking flag wheather the pin is available or not 
 								{
-									cout<<"atm pin is wrong"<<endl;
-									goto l1;
+									cout<<"atm pin is wrong"<<endl;  //if pin is not found displaying error message
+									goto l1; // again moving in backward to intial process
 								}
+								flag1=1;
 							}
 						}
-						else
+						else if(flag1==0) //checking username is found or not
 						{
-							cout<<"wrong account number entered"<<endl;
+							cout<<"wrong account number entered"<<endl; //if username found displaying error message 
 							goto l1;
 						}
-						ptr=ptr->next;
-
+						ptr=ptr->next;// traversing ponter ptr1 in forward upto null or moving linked list upto null pointer
 					}
-					goto l1;
+					goto l1; // traversing ponter ptr1 in forward upto null or moving linked list upto null pointer
 				}
 				else
 				{
-					cout<<"invalid option"<<endl;
-					goto l1;
+					cout<<"invalid option"<<endl; //if option is wrong displaying invalid message
+					goto l1;                 // again moving in backward to intial process
 				}
 			}
 		}
-		void withdraw(int pin)
+		void withdraw(int pin) // function defination for withdraw
 		{
 			dll *ptr=head;
 			int wa;
-			while(ptr)
+			while(ptr)       
 			{
-				if((ptr->pin)==pin)
+				if((ptr->pin)==pin) //checking pin linked list with respect to pin
 				{
 					cout<<"enter the amount to withdraw"<<endl;
-					cin>>wa;
-					if(wa<100)
+					cin>>wa; // asking the user for withdrawing amount
+					if(wa<100)  // checking condition wheather the entered amount is less than 100
 					{
-						cout<<"minimum amount to withdraw is 100 "<<endl;
+						cout<<"minimum amount to withdraw is 100 "<<endl; //
 						return;
 					}
 					cout<<"withdrawing an amount please wait for a minute ..."<<endl;
