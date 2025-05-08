@@ -129,7 +129,7 @@ l1:		dll *ptr=head;           // pointing first head node for
 		dll *ptr1=head;         // pointing first head node for
 		string name;int pin;
 		int acc_no,op,flag=0,flag1=0;
-		while(1)            
+		while(1)            Update 
 		{
 			cout<<"1) by user_name"<<endl; 
 			cout<<"2) by account number"<<endl;
@@ -299,13 +299,13 @@ l1:		dll *ptr=head;           // pointing first head node for
 					cin>>wa; // asking the user for withdrawing amount
 					if(wa<100)  // checking condition wheather the entered amount is less than 100
 					{
-						cout<<"minimum amount to withdraw is 100 "<<endl; //
+						cout<<"minimum amount to withdraw is 100 "<<endl; // displaying error message
 						return;
 					}
 					cout<<"withdrawing an amount please wait for a minute ..."<<endl;
 					sleep(2);
-					ptr->bal-=wa;
-					ptr->w=wa;
+					ptr->bal-=wa; //withdrawing amount
+					ptr->w=wa;   
 				}
 				ptr=ptr->next;
 			}
@@ -315,22 +315,22 @@ l1:		dll *ptr=head;           // pointing first head node for
 		void deposit(int pin)
 		{
 			dll *ptr=head;
-			int wa;
+			int de;
 			while(ptr!=0)
 			{
 				if((ptr->pin)==pin)
 				{
 					cout<<"enter the amount to deposit"<<endl;
-					cin>>wa;
-					if(wa<100)
+					cin>>de;    // asking the user for depositing amount
+					if(de<100) // checking condition wheather the entered amount for deposit is less than 100
 					{
-						cout<<"minimum amount to depositing is 100 "<<endl;
+						cout<<"minimum amount to depositing is 100 "<<endl; // displaying error message
 						return;
 					}
 					cout<<"depositing an amount please wait for a minute ..."<<endl;
 					sleep(2);
-					ptr->bal+=wa;
-					ptr->d=wa;
+					ptr->bal+=de; //depositing amount
+					ptr->d=de;
 				}
 				ptr=ptr->next;
 			}
@@ -345,7 +345,7 @@ l1:		dll *ptr=head;           // pointing first head node for
 				if((ptr->pin)==pin)
 				{
 					cout<<"your account balance is :- "<<endl;
-					cout<<(ptr->bal)<<endl;
+					cout<<(ptr->bal)<<endl;  // displaying total balance of account
 				}
 				ptr=ptr->next;
 			}
@@ -366,14 +366,14 @@ l1:		dll *ptr=head;           // pointing first head node for
 			{
 				if((last->pin)==pin)
 				{
-					cout<<(last->name)<<" "<<(last->acc_no)<<" "<<(last->bal)<<"    "<<(last->w)<<"      "<<(last->d)<<endl;
-				}
+					cout<<(last->name)<<" "<<(last->acc_no)<<" "<<(last->bal)<<"    "<<(last->w)<<"      "<<(last->d)<<endl; //printing transactional details
+ 				}
 				last=last->next;
 			}
 		}
 };
 int main()
 {
-	ATM a;
+	ATM a;// creating obj  and calling constructor it will execute automatically
 	a.print();
 }
