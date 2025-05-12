@@ -3,7 +3,7 @@
 #define TCS ((C2GSR>>3)&1)
 #define RBS (C2GSR&1)
 u32 *p=(unsigned int *)0xE0038000;
-void can_init(void)
+/*void can_init(void)
 {
 VPBDIV=1;
 PINSEL1|=0X14000;
@@ -11,7 +11,7 @@ C2MOD=1;
 C2BTR=0X001c001D;
 AFMR=2;///disable message acceptance
 C2MOD=0;
-}
+}*/
 void can_td(CAN1 v)
 {
 	C2TID1=v.id;
@@ -40,25 +40,25 @@ void can_rd(CAN1 *p)
 	C2CMR=(1<<2);
 }
 
-///////* afmr */
-//void can_init(void)
-//{
-//	VPBDIV=1;
-//	PINSEL1|=0X14000;
-//	C2BTR=0X001c001D;
-//	C2MOD=1;
-//	 /*ecp*/
-//	p[0]=0x20502100;
-//	p[1]=0x21502200; 
-//	p[2]=0x22502300;
-//	///////////////////////////////////
-//	SFF_sa=0x0;						  
-//	SFF_GRP_sa=0xc;
-//	EFF_sa=0xc;
-//	EFF_GRP_sa= 0xc;
-//	ENDofTable=0xc;
-//	/////////////////////////////////
-//	AFMR=0;
-//	C2MOD=0;    
-//}
+/* afmr */
+void can_init(void)
+{
+	VPBDIV=1;
+	PINSEL1|=0X14000;
+	C2BTR=0X001c001D;
+	C2MOD=1;
+	 /*ecp*/
+	p[0]=0x20502100;  
+	p[1]=0x21502200; 
+	p[2]=0x22502300;
+	///////////////////////////////////
+	SFF_sa=0x0;						  
+	SFF_GRP_sa=0xc;
+	EFF_sa=0xc;
+	EFF_GRP_sa= 0xc;
+	ENDofTable=0xc;
+	/////////////////////////////////
+	AFMR=0;
+	C2MOD=0;    
+}
 
